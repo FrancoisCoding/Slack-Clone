@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import firebase from "../../firebase";
 import {
   Grid,
   Form,
@@ -11,8 +12,30 @@ import {
 import { Link } from "react-router-dom";
 
 const Register = () => {
-  const [formState, setFormState] = useState();
-  const handleChange = () => {};
+  const [formState, setFormState] = useState({
+    username: "",
+    email: "",
+    password: "",
+    passwordConfirmation: "",
+  });
+  const handleChange = (e) => {
+    setFormState({ ...formState, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formState, "formState");
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(formState.email, formState.password)
+      .then((createdUser) => {
+        console.log(createdUser);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   return (
     <Grid textAlign="center" verticalAlign="middle" className="app">
       <Grid.Column style={{ maxWidth: 450 }}>
@@ -20,7 +43,7 @@ const Register = () => {
           <Icon name="puzzle piece" color="orange" />
           Register for DevChat
         </Header>
-        <Form size="large">
+        <Form onSubmit={handleSubmit} size="large">
           <Segment stacked>
             <Form.Input
               fluid
@@ -30,6 +53,7 @@ const Register = () => {
               placeholder="Username"
               onChange={handleChange}
               type="text"
+              value={formState.username}
             />
             <Form.Input
               fluid
@@ -39,6 +63,7 @@ const Register = () => {
               placeholder="Email Address"
               onChange={handleChange}
               type="email"
+              value={formState.email}
             />
             <Form.Input
               fluid
@@ -48,6 +73,7 @@ const Register = () => {
               placeholder="Password"
               onChange={handleChange}
               type="password"
+              value={formState.password}
             />
             <Form.Input
               fluid
@@ -57,6 +83,7 @@ const Register = () => {
               placeholder="Password Confirmation"
               onChange={handleChange}
               type="password"
+              value={formState.passwordConfirmation}
             />
             <Button color="orange" fluid size="large">
               Submit
