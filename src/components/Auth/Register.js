@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import firebase from "../../firebase";
 import {
   Grid,
@@ -11,91 +11,153 @@ import {
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-const Register = () => {
-  const [formState, setFormState] = useState({
+class Register extends React.Component {
+  state = {
     username: "",
     email: "",
     password: "",
     passwordConfirmation: "",
-  });
-  const handleChange = (e) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
+    errors: [],
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formState, "formState");
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(formState.email, formState.password)
-      .then((createdUser) => {
-        console.log(createdUser);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  isFormValid = () => {
+    let errors = [];
+    let error;
+
+    if (this.isFormEmpty(this.state)) {
+      error = { message: "Fill in all fields" };
+      this.setState({ errors: errors.concat(error) });
+      return false;
+    } else if (!this.isPasswordValid(this.state)) {
+      error = { message: "Password is invalid" };
+      this.setState({ errors: errors.concat(error) });
+      return false;
+    } else {
+      return true;
+    }
   };
 
-  return (
-    <Grid textAlign="center" verticalAlign="middle" className="app">
-      <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as="h2" ixon color="orange" textAlign="center">
-          <Icon name="puzzle piece" color="orange" />
-          Register for DevChat
-        </Header>
-        <Form onSubmit={handleSubmit} size="large">
-          <Segment stacked>
-            <Form.Input
-              fluid
-              name="username"
-              icon="user"
-              iconPosition="left"
-              placeholder="Username"
-              onChange={handleChange}
-              type="text"
-              value={formState.username}
-            />
-            <Form.Input
-              fluid
-              name="email"
-              icon="mail"
-              iconPosition="left"
-              placeholder="Email Address"
-              onChange={handleChange}
-              type="email"
-              value={formState.email}
-            />
-            <Form.Input
-              fluid
-              name="password"
-              icon="lock"
-              iconPosition="left"
-              placeholder="Password"
-              onChange={handleChange}
-              type="password"
-              value={formState.password}
-            />
-            <Form.Input
-              fluid
-              name="passwordConfirmation"
-              icon="repeat"
-              iconPosition="left"
-              placeholder="Password Confirmation"
-              onChange={handleChange}
-              type="password"
-              value={formState.passwordConfirmation}
-            />
-            <Button color="orange" fluid size="large">
-              Submit
-            </Button>
-          </Segment>
-        </Form>
-        <Message>
-          Already a user? <Link to="/login">Login</Link>
-        </Message>
-      </Grid.Column>
-    </Grid>
-  );
-};
+  isFormEmpty = ({ username, email, password, passwordConfirmation }) => {
+    return (
+      !username.length ||
+      !email.length ||
+      !password.length ||
+      !passwordConfirmation.length
+    );
+  };
+
+  isPasswordValid = ({ password, passwordConfirmation }) => {
+    if (password.length < 6 || passwordConfirmation.length < 6) {
+      return false;
+    } else if (password !== passwordConfirmation) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  displayErrors = (errors) =>
+    errors.map((error, i) => <p key={i}>{error.message}</p>);
+
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleSubmit = (event) => {
+    if (this.isFormValid()) {
+      event.preventDefault();
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then((createdUser) => {
+          console.log(createdUser);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  };
+
+  render() {
+    const {
+      username,
+      email,
+      password,
+      passwordConfirmation,
+      errors,
+    } = this.state;
+
+    return (
+      <Grid textAlign="center" verticalAlign="middle" className="app">
+        <Grid.Column style={{ maxWidth: 450 }}>
+          <Header as="h2" icon color="orange" textAlign="center">
+            <Icon name="puzzle piece" color="orange" />
+            Register for DevChat
+          </Header>
+          <Form onSubmit={this.handleSubmit} size="large">
+            <Segment stacked>
+              <Form.Input
+                fluid
+                name="username"
+                icon="user"
+                iconPosition="left"
+                placeholder="Username"
+                onChange={this.handleChange}
+                value={username}
+                type="text"
+              />
+
+              <Form.Input
+                fluid
+                name="email"
+                icon="mail"
+                iconPosition="left"
+                placeholder="Email Address"
+                onChange={this.handleChange}
+                value={email}
+                type="email"
+              />
+
+              <Form.Input
+                fluid
+                name="password"
+                icon="lock"
+                iconPosition="left"
+                placeholder="Password"
+                onChange={this.handleChange}
+                value={password}
+                type="password"
+              />
+
+              <Form.Input
+                fluid
+                name="passwordConfirmation"
+                icon="repeat"
+                iconPosition="left"
+                placeholder="Password Confirmation"
+                onChange={this.handleChange}
+                value={passwordConfirmation}
+                type="password"
+              />
+
+              <Button color="orange" fluid size="large">
+                Submit
+              </Button>
+            </Segment>
+          </Form>
+          {errors.length > 0 && (
+            <Message error>
+              <h3>Error</h3>
+              {this.displayErrors(errors)}
+            </Message>
+          )}
+          <Message>
+            Already a user? <Link to="/login">Login</Link>
+          </Message>
+        </Grid.Column>
+      </Grid>
+    );
+  }
+}
 
 export default Register;
