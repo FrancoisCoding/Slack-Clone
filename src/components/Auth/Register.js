@@ -18,6 +18,7 @@ class Register extends React.Component {
     password: "",
     passwordConfirmation: "",
     errors: [],
+    loading: false,
   };
 
   isFormValid = () => {
@@ -64,18 +65,32 @@ class Register extends React.Component {
   };
 
   handleSubmit = (event) => {
+    event.preventDefault();
+    this.setState({ errors: [], loading: true });
     if (this.isFormValid()) {
-      event.preventDefault();
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then((createdUser) => {
           console.log(createdUser);
+          this.setState({ loading: false });
         })
         .catch((err) => {
           console.error(err);
+          this.setState({
+            errors: this.state.errors.concat(err),
+            loading: false,
+          });
         });
     }
+  };
+
+  handleInputError = (errors, inputName) => {
+    return errors.some((error) =>
+      error.message.toLowerCase().includes(inputName)
+    )
+      ? "error"
+      : "";
   };
 
   render() {
@@ -85,6 +100,7 @@ class Register extends React.Component {
       password,
       passwordConfirmation,
       errors,
+      loading,
     } = this.state;
 
     return (
@@ -115,6 +131,7 @@ class Register extends React.Component {
                 placeholder="Email Address"
                 onChange={this.handleChange}
                 value={email}
+                className={this.handleInputError(errors, "email")}
                 type="email"
               />
 
@@ -126,6 +143,7 @@ class Register extends React.Component {
                 placeholder="Password"
                 onChange={this.handleChange}
                 value={password}
+                className={this.handleInputError(errors, "password")}
                 type="password"
               />
 
@@ -137,10 +155,17 @@ class Register extends React.Component {
                 placeholder="Password Confirmation"
                 onChange={this.handleChange}
                 value={passwordConfirmation}
+                className={this.handleInputError(errors, "password")}
                 type="password"
               />
 
-              <Button color="orange" fluid size="large">
+              <Button
+                disabled={loading}
+                className={loading ? "loading" : ""}
+                color="orange"
+                fluid
+                size="large"
+              >
                 Submit
               </Button>
             </Segment>
