@@ -13,6 +13,7 @@ class MessagesHeader extends React.Component {
           </span>
           <Header.Subheader>2 Users</Header.Subheader>
         </Header>
+
         {/* Channel Search Input */}
         <Header floated="right">
           <Input

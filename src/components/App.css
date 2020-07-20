@@ -6,7 +6,7 @@ body,
   padding: 1em;
 }
 
-/* Messages */
+/* Messages.js */
 .messages {
   height: 440px;
   overflow-y: scroll;
