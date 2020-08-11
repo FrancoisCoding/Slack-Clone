@@ -59,7 +59,7 @@ If you'd like to request a new function, feel free to do so by opening an issue 
 
 ## Team
 
-[![Isaiah Francois](https://avatars3.githubusercontent.com/u/42652624?s=460&u=67ee8021c518676f3ec3e99d8c12906b36842365&v=4)  | [![francoiscoding.com](https://i.imgur.com/2eRGyyY.jpg)](https://francoiscoding.com/)
----|---
+![Isaiah Francois](https://avatars3.githubusercontent.com/u/42652624?s=460&u=67ee8021c518676f3ec3e99d8c12906b36842365&v=4)
+
 
 
