@@ -4,6 +4,7 @@ import * as actionTypes from "../actions/types";
 const initialUserState = {
   currentUser: null,
   isLoading: true,
+  bypass: false,
 };
 
 const user_reducer = (state = initialUserState, action) => {
@@ -17,6 +18,11 @@ const user_reducer = (state = initialUserState, action) => {
       return {
         ...state,
         isLoading: false,
+      };
+    case actionTypes.SET_BYPASS:
+      return {
+        ...state,
+        bypass: action.payload,
       };
     default:
       return state;

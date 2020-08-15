@@ -1,6 +1,7 @@
 /* User Action Types */
 export const SET_USER = "SET_USER";
 export const CLEAR_USER = "CLEAR_USER";
+export const SET_BYPASS = "SET_BYPASS";
 
 /* Channel Action Types */
 export const SET_CURRENT_CHANNEL = "SET_CURRENT_CHANNEL";

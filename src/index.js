@@ -21,15 +21,15 @@ import { Provider, connect } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./reducers";
 import { setUser, clearUser } from "./actions";
+import VideoCalling from "./components/VideoCalling/VideoCalling";
 
 const store = createStore(rootReducer, composeWithDevTools());
 
 class Root extends React.Component {
   componentDidMount() {
-    console.log(this.props.isLoading);
+    console.log("bypass", this.props.bypass);
     firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        // console.log(user);
+      if (user && !this.props.bypass) {
         this.props.setUser(user);
         this.props.history.push("/");
       } else {
@@ -47,6 +47,10 @@ class Root extends React.Component {
         <Route exact path="/" component={App} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route
+          path="/video"
+          component={() => <VideoCalling bypass={this.props.bypass} />}
+        />
       </Switch>
     );
   }
@@ -54,6 +58,7 @@ class Root extends React.Component {
 
 const mapStateFromProps = (state) => ({
   isLoading: state.user.isLoading,
+  bypass: state.user.bypass,
 });
 
 const RootWithAuth = withRouter(

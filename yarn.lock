@@ -8942,6 +8942,11 @@ react-is@^16.6.0, react-is@^16.6.3, react-is@^16.7.0, react-is@^16.8.1, react-is
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-jutsu@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-jutsu/-/react-jutsu-2.2.0.tgz#d09108329910653dd0410ee3ad6d13420ef1a6af"
+  integrity sha512-iDL7wSKgRRdAIYO/mO+HJUxONzLrhyLYLJLHAQUu94MXrKciB/mS6O8oN3yZeYGMgVWWUpb89nlOxi24D/yKnQ==
+
 react-popper@^1.3.4:
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-1.3.7.tgz#f6a3471362ef1f0d10a4963673789de1baca2324"
