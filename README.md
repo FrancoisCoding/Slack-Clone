@@ -30,7 +30,8 @@ Here is a working live demo :  https://react-slack-clone-bed12.web.app/
 ### Avatar Changer
 ![](https://i.imgur.com/v89nKcD.png)
 
-
+### Video Calling
+![](https://i.imgur.com/NBLkJoY.png)
 
 
 ## [Usage](https://github.com/FrancoisCoding/Slack-Clone) 
@@ -51,11 +52,13 @@ If you'd like to request a new function, feel free to do so by opening an issue 
 - [Redux](https://redux.js.org/) - A Predictable State Container for JS Apps
 - [Moment](https://momentjs.com/) - A lightweight JavaScript date library for parsing, validating, manipulating, and formatting dates.
 - [Emoji-Mart](https://github.com/missive/emoji-mart) - Emoji Mart is a Slack-like customizable emoji picker component for React
+- [Jutsu](https://github.com/this-fifo/jutsu) - A jitsi meet component wrapper and custom hook moulded with react's chakra
 
 
 
 ## To-do
 - Limit App Color Changer Blocks
+- Add music player
 
 ## Team
 
