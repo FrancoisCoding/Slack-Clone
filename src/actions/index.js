@@ -16,6 +16,14 @@ export const clearUser = () => {
   };
 };
 
+export const setBypass = (bool) => {
+  return {
+    type: actionTypes.SET_BYPASS,
+    payload: {
+      bypass: bool,
+    },
+  };
+};
 /* Channel Actions */
 export const setCurrentChannel = (channel) => {
   return {
